@@ -83,9 +83,9 @@ public class MyUserDetails implements UserDetails {
 		AuthService auth = (AuthService)BeanFinder.findService("authService");
 		PasswordEncoder encoder = (PasswordEncoder)BeanFinder.findService("passwordEncoder");
 		
-		List<? extends GrantedAuthority> grantedAuths = user.getRole().getPermissions().stream()
+		List<SimpleGrantedAuthority> grantedAuths = user.getRole().getPermissions().stream()
 				.map((perm) -> new SimpleGrantedAuthority(perm.getPermisssionName())).collect(Collectors.toList());
-		
+		grantedAuths.add(new SimpleGrantedAuthority(user.getRole().getRoleName()));
 		return new MyUserDetails(grantedAuths, user.getUsername(), encoder.encode(user.getPassword()), true, true, true, true);
 
 	}

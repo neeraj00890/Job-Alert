@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,10 +17,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.Job_Alert.service.IUserService;
+import com.project.entity.User;
+
 @RestController
-@RequestMapping("/api/student")
-@PreAuthorize("hasRole('STUDENT')")
+@RequestMapping("/api/students")
+@PreAuthorize("hasAnyRole('ROLE_STUDENT', 'ROLE_ADMIN')")
 public class StudentController {
+	
+	@Autowired
+	private IUserService userService;
 	
 static List<String> STUDNETS = new ArrayList<String>();
 	
@@ -30,27 +37,33 @@ static List<String> STUDNETS = new ArrayList<String>();
 		STUDNETS.add("STUDNET4");
 		STUDNETS.add("STUDNET5");
 	}
-	@GetMapping
-	public  ResponseEntity<List<String>> getAdminDetails() {
-		return ResponseEntity.ok(STUDNETS);
-	}
 	
 	@PutMapping
+	@PreAuthorize("hasAuthority('std:write')")
 	public  ResponseEntity<List<String>> putAdminDetails(@RequestBody String studentName) {
 		System.out.println("Putting studentName...."+ studentName);
 		return ResponseEntity.ok(STUDNETS);
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasAuthority('std:write')")
 	public  ResponseEntity<List<String>> postAdminDetails(@RequestBody String studentName) {
 		STUDNETS.add(studentName);
 		return ResponseEntity.ok(STUDNETS);
 	}
 	
 	@DeleteMapping("{studentName}")
+	@PreAuthorize("hasAuthority('std:write')")
 	public  ResponseEntity<List<String>> deleteAdminDetails(@PathVariable("studentName") String studentName) {
 		STUDNETS =	STUDNETS.stream().filter((admin)-> !admin.equalsIgnoreCase(studentName)).collect(Collectors.toList());
 		return ResponseEntity.ok(STUDNETS);
+	}
+	
+	@GetMapping
+	@PreAuthorize("hasAuthority('std:read')")
+	public  ResponseEntity<List<User>> getStudents() {
+		List<User> users = userService.findByRoleName("ROLE_STUDENT");
+		return ResponseEntity.ok(users);
 	}
 
 }

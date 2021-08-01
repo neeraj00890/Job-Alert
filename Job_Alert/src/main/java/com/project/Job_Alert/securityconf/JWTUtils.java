@@ -26,7 +26,7 @@ public class JWTUtils {
 	}
 	
 	public Claims extractAllClaims(String token) {
-		return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJwt(token).getBody();
+		return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
 	}
 	
 	public Date extractExpiration(String token) {

@@ -44,7 +44,6 @@ public class AuthService implements IAuthService {
 		} catch (BadCredentialsException exception){
 			throw new ApplicationException(exception.getMessage(), HttpStatus.UNAUTHORIZED);
 		} 
-		
 	}
 
 }

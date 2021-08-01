@@ -8,7 +8,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@ComponentScan(basePackages = "com.project.*")
+@ComponentScan(basePackages = {"com.project.*", "com.persistance.*"})
 @EntityScan(basePackages = "com.project.entity")
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = "com.project.Job_Alert.*")

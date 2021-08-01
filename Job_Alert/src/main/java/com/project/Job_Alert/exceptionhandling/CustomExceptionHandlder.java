@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -31,6 +32,9 @@ public class CustomExceptionHandlder {
 			ApplicationException applicationException = (ApplicationException) ex;
 			err = new ErrorResponse(request.getRequestURI(), applicationException.getMessage(), applicationException.getStatusCode().value());
 			response.setStatus(applicationException.getStatusCode().value());
+		} else {
+			err = new ErrorResponse(request.getRequestURI(), ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
 		}
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter pw = response.getWriter();

@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/webmob-dell/eclipse-workspace/job-alert-ui/src/polyfills.ts */"hN/g");
+module.exports = __webpack_require__(/*! /home/webmob-dell/eclipse-ui/job-alert-ui/src/polyfills.ts */"hN/g");
 
 
 /***/ }),
