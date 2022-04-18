@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.jobalert.entity.User;
+import com.jobalert.repository.UserRepository;
 import com.project.Job_Alert.exceptionhandling.ApplicationException;
-import com.project.Job_Alert.repository.UserRepository;
 
 @Service
 public class MyUserDetailService implements UserDetailsService {
@@ -21,7 +21,7 @@ public class MyUserDetailService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		com.project.entity.User user = userRepo.findByUsername(username);
+		User user = userRepo.findByUsername(username);
 		if (user == null) {
 			throw new ApplicationException("Username is invalid", HttpStatus.UNAUTHORIZED);
 		}

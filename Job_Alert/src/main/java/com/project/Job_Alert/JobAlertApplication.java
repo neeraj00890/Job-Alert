@@ -8,10 +8,14 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.jobalert.core.CommonUtil;
+
+
+
 @ComponentScan(basePackages = {"com.project.*", "com.persistance.*"})
-@EntityScan(basePackages = "com.project.entity")
+@EntityScan(basePackages = "com.jobalert.entity")
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = "com.project.Job_Alert.*")
+@EnableJpaRepositories(basePackages = "com.jobalert.repository")
 public class JobAlertApplication extends SpringBootServletInitializer{
 
 	@Override
@@ -20,6 +24,7 @@ public class JobAlertApplication extends SpringBootServletInitializer{
 	    }
 	
 	public static void main(String[] args) {
+		CommonUtil.printMe();
 		SpringApplication.run(JobAlertApplication.class, args);
 	}
 }

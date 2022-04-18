@@ -17,6 +17,7 @@ public class HibernatePersistanceService implements IHibernatePersistanceService
 
 	public List<Object> executeQuery(String query, Map<String, Object> params) {
 		Session session = sessionFactory.openSession();
+		sessionFactory.getCurrentSession();
 		Query sql = session.createQuery(query);
 		params.forEach((key, value) -> {
 			sql.setParameter(key, value);

@@ -1,5 +1,11 @@
 package com.project.Job_Alert.dto;
 
+import java.util.List;
+
+import com.jobalert.entity.Skill;
+
+
+
 public class SignupDTO {
 	
 	private String username;
@@ -9,8 +15,15 @@ public class SignupDTO {
 	private String lastname;
 	private String email;
 	private String role;
+	private List<Skill> skills;
 	public String getRole() {
 		return role;
+	}
+	public List<Skill> getSkill() {
+		return skills;
+	}
+	public void setSkill(List<Skill> skill) {
+		this.skills = skill;
 	}
 	public void setRole(String role) {
 		this.role = role;

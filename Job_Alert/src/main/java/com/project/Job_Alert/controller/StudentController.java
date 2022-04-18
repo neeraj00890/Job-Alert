@@ -17,19 +17,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jobalert.entity.User;
+import com.project.Job_Alert.dto.ResponseDTO;
 import com.project.Job_Alert.service.IUserService;
-import com.project.entity.User;
 
 @RestController
 @RequestMapping("/api/students")
 @PreAuthorize("hasAnyRole('ROLE_STUDENT', 'ROLE_ADMIN')")
 public class StudentController {
-	
+
 	@Autowired
 	private IUserService userService;
-	
-static List<String> STUDNETS = new ArrayList<String>();
-	
+
+	static List<String> STUDNETS = new ArrayList<String>();
+
 	static {
 		STUDNETS.add("STUDNET1");
 		STUDNETS.add("STUDNET2");
@@ -37,33 +38,37 @@ static List<String> STUDNETS = new ArrayList<String>();
 		STUDNETS.add("STUDNET4");
 		STUDNETS.add("STUDNET5");
 	}
-	
+
 	@PutMapping
 	@PreAuthorize("hasAuthority('std:write')")
-	public  ResponseEntity<List<String>> putAdminDetails(@RequestBody String studentName) {
-		System.out.println("Putting studentName...."+ studentName);
+	public ResponseEntity<List<String>> putAdminDetails(@RequestBody String studentName) {
+		System.out.println("Putting studentName...." + studentName);
 		return ResponseEntity.ok(STUDNETS);
 	}
-	
+
 	@PostMapping
 	@PreAuthorize("hasAuthority('std:write')")
-	public  ResponseEntity<List<String>> postAdminDetails(@RequestBody String studentName) {
+	public ResponseEntity<List<String>> postAdminDetails(@RequestBody String studentName) {
 		STUDNETS.add(studentName);
 		return ResponseEntity.ok(STUDNETS);
 	}
-	
+
 	@DeleteMapping("{studentName}")
 	@PreAuthorize("hasAuthority('std:write')")
-	public  ResponseEntity<List<String>> deleteAdminDetails(@PathVariable("studentName") String studentName) {
-		STUDNETS =	STUDNETS.stream().filter((admin)-> !admin.equalsIgnoreCase(studentName)).collect(Collectors.toList());
+	public ResponseEntity<List<String>> deleteAdminDetails(@PathVariable("studentName") String studentName) {
+		STUDNETS = STUDNETS.stream().filter((admin) -> !admin.equalsIgnoreCase(studentName))
+				.collect(Collectors.toList());
 		return ResponseEntity.ok(STUDNETS);
 	}
-	
+
 	@GetMapping
 	@PreAuthorize("hasAuthority('std:read')")
-	public  ResponseEntity<List<User>> getStudents() {
+	public ResponseEntity<ResponseDTO> getStudents() {
 		List<User> users = userService.findByRoleName("ROLE_STUDENT");
-		return ResponseEntity.ok(users);
+		ResponseDTO responseDTO = new ResponseDTO();
+		responseDTO.setData(users);
+		responseDTO.setMessage("student list.");
+		return ResponseEntity.ok(responseDTO);
 	}
 
 }

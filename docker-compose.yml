@@ -1,0 +1,28 @@
+version: "3"
+services: 
+    "mysql-app": 
+        build: 
+            context: .
+            dockerfile: ./image/mysql/Dockerfile
+        ports: 
+          - 3306:3306
+        networks: 
+            - common
+    "main-app": 
+        build: 
+            context: .
+            dockerfile: ./Job_Alert/Dockerfile
+        ports: 
+          - 8080:8080
+        depends_on:
+            - immysql
+        networks: 
+            - common
+    "immysql":
+        image: "mysql:8"
+        ports:
+            - "3306:3306"
+        networks: 
+            - common
+networks: 
+    common:

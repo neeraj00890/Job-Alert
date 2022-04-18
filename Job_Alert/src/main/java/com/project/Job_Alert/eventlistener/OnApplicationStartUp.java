@@ -9,9 +9,11 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import com.project.Job_Alert.repository.RoleRepository;
-import com.project.entity.Permission;
-import com.project.entity.Role;
+import com.jobalert.entity.Permission;
+import com.jobalert.entity.Role;
+import com.jobalert.entity.Skill;
+import com.jobalert.repository.RoleRepository;
+import com.jobalert.repository.SkillRepository;
 
 @Component
 public class OnApplicationStartUp {
@@ -21,12 +23,16 @@ public class OnApplicationStartUp {
 	boolean isForceMode;
 	@Autowired
 	RoleRepository roleRepo;
+	
+	@Autowired
+	SkillRepository skillRepo;
 
 	@EventListener
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		if(isForceMode) {
 			initalizeAdminPerms();
 			initalizeStudentPerms();
+			initalizeSkillSet();
 		}
 	}
 
@@ -71,5 +77,27 @@ public class OnApplicationStartUp {
 		role.setPermissions(stdPerms);
 		role.setRoleName("ROLE_STUDENT");
 		roleRepo.save(role);
+	}
+	
+	private void initalizeSkillSet() {
+		Skill skill1 = new Skill();
+		skill1.setName("Java");
+		skill1.setDescription("Java is OOPS Languange");
+		
+		Skill skill2 = new Skill();
+		skill2.setName("JavaScript");
+		skill2.setDescription("JavaScript is OOPS Languange");
+		
+		Skill skill3 = new Skill();
+		skill3.setName("C++");
+		skill3.setDescription("C++ is OOPS Languange");
+		
+		Skill skill4 = new Skill();
+		skill4.setName("Node");
+		skill4.setDescription("NodeJs is Backend Scripting Language");
+		skillRepo.save(skill1);
+		skillRepo.save(skill2);
+		skillRepo.save(skill3);
+		skillRepo.save(skill4);
 	}
 }

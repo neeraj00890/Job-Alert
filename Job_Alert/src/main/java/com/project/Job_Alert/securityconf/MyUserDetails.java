@@ -9,9 +9,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.jobalert.entity.User;
 import com.project.Job_Alert.service.AuthService;
 import com.project.Job_Alert.service.BeanFinder;
-import com.project.entity.User;
 
 public class MyUserDetails implements UserDetails {
 
